@@ -4,10 +4,8 @@ import android.widget.Toast;
 import com.jd.easyokhttp.okhttps.AppUtil;
 
 /**
- * Created by leo on 2017/9/4.
- * 防止重复点击toast，一直显示未隐藏
+ * @author jd
  */
-
 public class ToastUtils {
 
     /** 之前显示的内容 */

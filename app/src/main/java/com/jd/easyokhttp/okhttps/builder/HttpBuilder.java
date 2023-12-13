@@ -3,6 +3,8 @@ package com.jd.easyokhttp.okhttps.builder;
 import android.os.Handler;
 import android.text.TextUtils;
 
+import androidx.annotation.Nullable;
+
 import com.jd.easyokhttp.okhttps.cookie.CookieJarManager;
 import com.jd.easyokhttp.okhttps.okcallback.NetworkCallback;
 import com.jd.easyokhttp.utils.GsonUtil;
@@ -22,20 +24,41 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ * @author jd
+ */
 public abstract class HttpBuilder {
-    protected String url;//url
-    protected String tag;//tag
-    protected Map<String, String> params;//参数
-    protected Map<String, String> headers;//header
-    protected boolean once;//默认同时多次请求一个接口 只请求一次
-    protected int retryCount; //默认不重连
+    /**
+     * url
+     */
+    protected String url;
+    /**
+     * tag
+     */
+    protected String tag;
+    /**
+     * 参数
+     */
+    protected Map<String, String> params;
+    /**
+     * header
+     */
+    protected Map<String, String> headers;
+    /**
+     * 默认同时多次请求一个接口 只请求一次
+     */
+    protected boolean once;
+    /**
+     * 默认不重连
+     */
+    protected int retryCount;
     protected int currentRetryCount;
     protected OkHttpClient okHttpClient;
     protected Handler mDelivery;
     private Request okHttpRequest;
     protected NetworkCallback callback;
 
-    private static ArrayList<String> onceTagList = new ArrayList<>();;
+    final private static ArrayList<String> onceTagList = new ArrayList<>();;
 
     public HttpBuilder(OkHttpClient okHttpClient,Handler delivery) {
         this.okHttpClient = okHttpClient;
@@ -47,14 +70,15 @@ public abstract class HttpBuilder {
         if (!TextUtils.isEmpty(tag)) {
             mBuilder.tag(tag);
         }
-        if (headers != null) {
-            mBuilder.headers(appendHeaders(headers));
+        Headers headers1 = appendHeaders(headers);
+        if (headers1 != null) {
+            mBuilder.headers(headers1);
         }
-        mBuilder.addHeader("User-Agent", CookieJarManager.getUserAgent());
+        mBuilder.addHeader("User-Agent", CookieJarManager.getInstance().getUserAgent());
         mBuilder.addHeader("Request-Time", String.valueOf(System.currentTimeMillis()));
         mBuilder.addHeader("Begin-Http-Time", new Date().toString());
-        if(!TextUtils.isEmpty(CookieJarManager.getToken())) {
-            mBuilder.addHeader("Authorization", CookieJarManager.getToken());
+        if(!TextUtils.isEmpty(CookieJarManager.getInstance().getToken())) {
+            mBuilder.addHeader("Authorization", CookieJarManager.getInstance().getToken());
         }
         okHttpRequest = mBuilder.build();
         return this;
@@ -62,7 +86,10 @@ public abstract class HttpBuilder {
 
     protected abstract Request.Builder createBuilder();
 
-    //获取tag
+    /**
+     * 获取tag
+     * @return
+     */
     private String getTag() {
         if (!TextUtils.isEmpty(tag)) {
             return tag;
@@ -77,7 +104,10 @@ public abstract class HttpBuilder {
         }
     }
 
-    //前置判断
+    /**
+     * 前置判断
+     * @return
+     */
     protected boolean canRequest() {
         if (once) {
             String tag = getTag();
@@ -89,13 +119,20 @@ public abstract class HttpBuilder {
         return true;
     }
 
-    //失败请求
+    /**
+     * 失败请求
+     * @param call
+     * @param e
+     * @param resultCall
+     * @param callback
+     */
     protected void doFailureCallback(Call call, final IOException e, final NetworkCallback resultCall, Callback callback) {
         if (e instanceof SocketException) {
 
         } else {
             //如果在重连的情况下，是主动取消网络是java.net.SocketException: Socket closed
-            if (currentRetryCount < retryCount && retryCount > 0) { // 如果超时并未超过指定次数，则重新连接
+            if (currentRetryCount < retryCount && retryCount > 0) {
+                // 如果超时并未超过指定次数，则重新连接
                 currentRetryCount++;
                 okHttpClient.newCall(call.request()).enqueue(callback);
                 return;
@@ -161,7 +198,10 @@ public abstract class HttpBuilder {
 
     }
 
-    //非封装单独使用
+    /**
+     * 非封装单独使用
+     * @param resultCall
+     */
     public void enqueue(final NetworkCallback resultCall) {
         if (okHttpRequest == null) {
             return;
@@ -225,6 +265,7 @@ public abstract class HttpBuilder {
         return this;
     }
 
+    @Nullable
     private Headers appendHeaders(Map<String, String> headers) {
         Headers.Builder headerBuilder = new Headers.Builder();
         if (headers == null || headers.isEmpty()) {

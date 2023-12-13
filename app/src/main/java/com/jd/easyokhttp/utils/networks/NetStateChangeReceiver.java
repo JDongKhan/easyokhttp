@@ -11,11 +11,10 @@ import com.jd.easyokhttp.okhttps.AppUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * Created by leo
- * on 2019/7/29.
+ * @author jd
  * 网络监听的广播
- *
  */
 public class NetStateChangeReceiver extends BroadcastReceiver {
 
@@ -28,7 +27,11 @@ public class NetStateChangeReceiver extends BroadcastReceiver {
     private List<NetStateChangeObserver> mObservers = new ArrayList<>();
 
 
-    //注册了网络状态改变监听，一旦网络状态改变就会调用的方法
+    /**
+     * 注册了网络状态改变监听，一旦网络状态改变就会调用的方法
+     * @param context The Context in which the receiver is running.
+     * @param intent The Intent being received.
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
         if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())){
@@ -37,20 +40,29 @@ public class NetStateChangeReceiver extends BroadcastReceiver {
         }
     }
 
-    //注册广播
+    /**
+     * 注册广播
+     * @param context
+     */
     public static void registerReceiver(Context context){
         IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         context.registerReceiver( InstanceHolder.INSTANCE,intentFilter);
     }
 
 
-    //注释广播
+    /**
+     * 注释广播
+     * @param context
+     */
     public static void unRegisterReceiver(Context context){
         context.unregisterReceiver( InstanceHolder.INSTANCE);
     }
 
 
-    //添加观察者，一旦有改变，观察者会通知
+    /**
+     * 添加观察者，一旦有改变，观察者会通知
+     * @param observer
+     */
     public static void registerObserver(NetStateChangeObserver observer){
         if (observer == null) {
             return;
@@ -60,7 +72,10 @@ public class NetStateChangeReceiver extends BroadcastReceiver {
         }
     }
 
-    //观察者
+    /**
+     * 观察者
+     * @param observer
+     */
     public static void unRegisterObserver(NetStateChangeObserver observer){
         if (observer == null) {
             return;

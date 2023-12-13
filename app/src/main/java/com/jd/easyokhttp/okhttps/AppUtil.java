@@ -19,6 +19,9 @@ import com.jd.easyokhttp.okhttps.cookie.CookieJarManager;
 import java.lang.reflect.Method;
 import java.util.List;
 
+/**
+ * @author jd
+ */
 public class AppUtil {
     private static Application sApplication;
     private static String currentProcessName;
@@ -30,7 +33,7 @@ public class AppUtil {
      */
     public static void init(@NonNull final Application context) {
         AppUtil.sApplication = context;
-        CookieJarManager.init(context);
+        CookieJarManager.getInstance().init(context);
     }
 
     /**

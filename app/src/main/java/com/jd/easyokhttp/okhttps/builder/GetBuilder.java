@@ -2,13 +2,14 @@ package com.jd.easyokhttp.okhttps.builder;
 
 import android.os.Handler;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
+/**
+ * @author jd
+ */
 public class GetBuilder extends  HttpBuilder {
 
     public GetBuilder(OkHttpClient okHttpClient, Handler delivery) {
@@ -26,7 +27,12 @@ public class GetBuilder extends  HttpBuilder {
         return mBuilder;
     }
 
-    //get 参数拼在url后面
+    /**
+     * get 参数拼在url后面
+     * @param url
+     * @param params
+     * @return
+     */
     private String appendParams(String url, Map<String, String> params) {
         StringBuilder sb = new StringBuilder();
         if (url.indexOf("?") == -1) {

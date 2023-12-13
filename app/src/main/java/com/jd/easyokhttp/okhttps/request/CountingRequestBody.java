@@ -10,6 +10,9 @@ import okio.ForwardingSink;
 import okio.Okio;
 import okio.Sink;
 
+/**
+ * @author jd
+ */
 public class CountingRequestBody extends RequestBody {
     protected RequestBody delegate;
     protected Listener listener;

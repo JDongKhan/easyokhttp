@@ -14,6 +14,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
+/**
+ * @author jd
+ */
 public class PostBuilder extends  HttpBuilder {
 
     private MediaType mediaType = MediaType.parse("application/json;charset=utf-8");

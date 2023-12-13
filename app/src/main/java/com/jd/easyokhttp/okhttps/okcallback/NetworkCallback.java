@@ -6,18 +6,32 @@ import com.jd.easyokhttp.utils.ToastUtils;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+/**
+ * @author jd
+ */
 public abstract class NetworkCallback<T> {
 
-    //请求网络之前，一般展示loading
+    /**
+     * 请求网络之前，一般展示loading
+     */
     public void onBefore() {}
 
-    //请求网络结束，消失loading
+    /**
+     * 请求网络结束，消失loading
+     */
     public void onAfter() {}
 
-    //监听上传图片的进度(目前支持图片上传,其他重写这个方法无效)
+    /**
+     * 监听上传图片的进度(目前支持图片上传,其他重写这个方法无效)
+     * @param total
+     * @param progress
+     */
     public void inProgress(long total,float progress) {}
 
-    //错误信息
+    /**
+     * 错误信息
+     * @param errorMessage
+     */
     public void onError(String errorMessage) {
         ToastUtils.showToast(errorMessage);
     }

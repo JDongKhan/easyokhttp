@@ -9,9 +9,14 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ * @author jd
+ */
 public class OfflineCacheInterceptor implements Interceptor {
     private static OfflineCacheInterceptor offlineCacheInterceptor;
-    //离线的时候的缓存的过期时间
+    /**
+     * 离线的时候的缓存的过期时间
+     */
     private int offlineCacheTime;
 
     public void setOfflineCacheTime(int time) {

@@ -7,6 +7,9 @@ import com.google.gson.GsonBuilder;
 
 import java.lang.reflect.Type;
 
+/**
+ * @author jd
+ */
 public final class GsonUtil {
 
     private GsonUtil() {

@@ -17,6 +17,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okio.Buffer;
 
+/**
+ * @author jd
+ */
 public class LoggerInterceptor implements Interceptor {
     @NonNull
     @Override
@@ -57,10 +60,10 @@ public class LoggerInterceptor implements Interceptor {
         String url = request.url().toString();
         stringBuilder.append("\n请求地址:");
         stringBuilder.append(url);
-        stringBuilder.append("\nToken:"+ CookieJarManager.getToken());
+        stringBuilder.append("\nToken:"+ CookieJarManager.getInstance().getToken());
         stringBuilder.append("\n请求的Cookie:");
-        if (CookieJarManager.getCookieJar() != null) {
-            stringBuilder.append(CookieJarManager.getCookieJar().getCookieStore().getAllCookie().toString());
+        if (CookieJarManager.getInstance().getCookieJar() != null) {
+            stringBuilder.append(CookieJarManager.getInstance().getCookieJar().getCookieStore().getAllCookie().toString());
         }
         stringBuilder.append("\n请求内容:");
         stringBuilder.append(requestString);
@@ -81,9 +84,9 @@ public class LoggerInterceptor implements Interceptor {
         String url = request.url().toString();
         stringBuilder.append("\n请求地址:");
         stringBuilder.append(url);
-        stringBuilder.append("\nToken:"+ CookieJarManager.getToken());
+        stringBuilder.append("\nToken:"+ CookieJarManager.getInstance().getToken());
         stringBuilder.append("\n请求的Cookie:");
-        stringBuilder.append(CookieJarManager.getCookieJar().getCookieStore().getAllCookie().toString());
+        stringBuilder.append(CookieJarManager.getInstance().getCookieJar().getCookieStore().getAllCookie().toString());
         stringBuilder.append("\n请求内容:");
         stringBuilder.append(requestString);
         //响应报文

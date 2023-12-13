@@ -24,6 +24,9 @@ import okhttp3.Call;
 import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 
+/**
+ * @author jd
+ */
 public class EasyHttp {
     private static EasyHttp easyOk;
     private OkHttpClient okHttpClient;
@@ -31,16 +34,12 @@ public class EasyHttp {
 
     private EasyHttp() {
         mDelivery = new Handler(Looper.getMainLooper());
+        //证书信任
         okHttpClient = new OkHttpClient.Builder()
                 //设置缓存文件路径，和文件大小
                 .cache(new Cache(new File(Environment.getExternalStorageDirectory() + "/okhttp_cache/"), 50 * 1024 * 1024))
-                .hostnameVerifier(new HostnameVerifier() {//证书信任
-                    @Override
-                    public boolean verify(String hostname, SSLSession session) {
-                        return true;
-                    }
-                })
-                .cookieJar(CookieJarManager.getCookieJar())
+                .hostnameVerifier((hostname, session) -> true)
+                .cookieJar(CookieJarManager.getInstance().getCookieJar())
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)
@@ -90,7 +89,10 @@ public class EasyHttp {
         return new DownloadBuilder(EasyHttp.getInstance().getOkHttpClient(), EasyHttp.getInstance().getDelivery());
     }
 
-    //tag取消网络请求
+    /**
+     * tag取消网络请求
+     */
+
     public void cancelOkhttpTag(String tag) {
         Dispatcher dispatcher = okHttpClient.dispatcher();
         synchronized (dispatcher) {

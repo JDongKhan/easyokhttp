@@ -1,10 +1,10 @@
 package com.jd.easyokhttp.utils.networks;
 
 /**
- * Created by leo
- * on 2019/7/29.
+ * @author jd
  * net_work的枚举类
  */
+
 public enum NetworkType {
     NETWORK_WIFI("wifi"),
     NETWORK_4G("4G"),

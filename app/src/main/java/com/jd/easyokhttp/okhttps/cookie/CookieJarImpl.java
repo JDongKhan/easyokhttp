@@ -13,13 +13,16 @@ import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 
-/**
- * Created by 14074533 on 16/10/11.
- */
 
+/**
+ * @author jd
+ */
 public class CookieJarImpl implements CookieJar {
   private CustomCookieStore cookieStore;
-  private Map<String, Set<Cookie>> userCookies = new HashMap<String, Set<Cookie>>();  //用户手动添加的Cookie
+  /**
+   * 用户手动添加的Cookie
+   */
+  private Map<String, Set<Cookie>> userCookies = new HashMap<String, Set<Cookie>>();
   /**
    * 用来临时保存cookie,并原来还原
    */
@@ -47,14 +50,12 @@ public class CookieJarImpl implements CookieJar {
 
   @Override
   public synchronized void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-    // LogUtil.i("OkHttp", "saveFromResponse : " + url.toString() + "\n " + cookies.toString());
     cookieStore.saveCookies(url, cookies);
   }
 
   @Override
   public synchronized List<Cookie> loadForRequest(HttpUrl url) {
     // 暂时解决登录问题。带上全部cookie，不根据url携带cookie。
-    //List<Cookie> requestUrlCookies = cookieStore.loadCookies(url);
     List<Cookie> requestUrlCookies = cookieStore.getAllCookieNotExpired(url);
     Set<Cookie> userUrlCookies = userCookies.get(url.host());
     Set<Cookie> cookieSet = new HashSet<Cookie>();

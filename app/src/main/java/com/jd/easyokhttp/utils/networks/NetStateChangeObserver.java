@@ -1,14 +1,18 @@
 package com.jd.easyokhttp.utils.networks;
 
 /**
- * Created by leo
- * on 2019/7/29.
- * 观察者模式接口，目前可理解为。回调
+ * @author jd
  */
 public interface NetStateChangeObserver {
-    //网络断开连接的回调
+    /**
+     * 网络断开连接的回调
+     */
     void onNetDisconnected();
-    //有网络连接的回调
+
+    /**
+     * 有网络连接的回调
+     * @param networkType  网络类型
+     */
     void onNetConnected(NetworkType networkType);
 }
 

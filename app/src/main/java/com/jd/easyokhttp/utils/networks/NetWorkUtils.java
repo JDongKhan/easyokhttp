@@ -8,8 +8,7 @@ import android.telephony.TelephonyManager;
 import androidx.annotation.RequiresPermission;
 
 /**
- * Created by leo
- * on 2019/7/25.
+ * @author jd
  * 判断是否有网络连接
  */
 public class NetWorkUtils {

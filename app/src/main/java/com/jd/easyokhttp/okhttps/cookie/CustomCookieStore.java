@@ -6,10 +6,10 @@ import java.util.List;
 import okhttp3.Cookie;
 import okhttp3.HttpUrl;
 
-/**
- * Created by 14074533 on 16/10/11.
- */
 
+/**
+ * @author jd
+ */
 public interface CustomCookieStore {
 
   /**

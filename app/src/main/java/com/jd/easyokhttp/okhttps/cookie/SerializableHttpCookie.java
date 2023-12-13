@@ -26,9 +26,6 @@ import java.io.Serializable;
 
 import okhttp3.Cookie;
 
-/**
- * Created by 14074533 on 16/10/11.
- */
 public class SerializableHttpCookie implements Serializable {
   private static final long serialVersionUID = 6374381323722046732L;
 

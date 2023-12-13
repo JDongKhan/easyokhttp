@@ -41,7 +41,7 @@ public class PersistentCookieStore implements CustomCookieStore {
   private final SharedPreferences cookiePrefs;
 
   public PersistentCookieStore() {
-    cookiePrefs = CookieJarManager.getContext().getSharedPreferences(COOKIE_PREFS, Context.MODE_PRIVATE);
+    cookiePrefs = CookieJarManager.getInstance().getContext().getSharedPreferences(COOKIE_PREFS, Context.MODE_PRIVATE);
     cookies = new HashMap<String, ConcurrentHashMap<String, Cookie>>();
 
     //将持久化的cookies缓存到内存中,数据结构为 Map<Url.host, Map<Cookie.name, Cookie>>

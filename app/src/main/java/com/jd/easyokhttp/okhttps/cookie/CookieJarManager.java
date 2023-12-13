@@ -23,29 +23,23 @@ import java.util.Locale;
 /**
  * Cookie管理
  *
- * @author 14074533
+ * @author jd
  */
 public class CookieJarManager {
 
   private static volatile CookieJarManager instance;
 
-  private static Application mApplication;
+  private Application mApplication;
 
-  private static CookieJarImpl cookieJar;
+  private CookieJarImpl cookieJar;
 
-  private static String user_agent;
+  private String source;
 
-  private static String source;
+  private TokenGenerate tokenGenerate;
 
-  private static String mStoreCode;
+  private String sToken;
 
-  private static String loginCookie = "";
-
-  private static String sToken;
-
-  private CookieJarManager() {
-    // do something
-  }
+  private CookieJarManager() {}
 
   public static CookieJarManager getInstance() {
     if (instance == null) {
@@ -58,24 +52,24 @@ public class CookieJarManager {
     return instance;
   }
 
-  public static void init(Application app) {
+  public void init(Application app) {
     init(app, "");
   }
 
-  public static void init(Application app, String source_from) {
+  public void init(Application app, String source_from) {
     mApplication = app;
     source = source_from;
     cookieJar = new CookieJarImpl(new PersistentCookieStore());
   }
 
-  public static Context getContext() {
+  public Context getContext() {
     return mApplication;
   }
 
   /**
    * 获取全局的cookie实例
    */
-  public static CookieJarImpl getCookieJar() {
+  public CookieJarImpl getCookieJar() {
     return cookieJar;
   }
 
@@ -84,7 +78,7 @@ public class CookieJarManager {
    *
    * @return
    */
-  public static String getSource() {
+  public String getSource() {
     return TextUtils.isEmpty(source) ? "SmartHealth" : source;
   }
 
@@ -93,7 +87,7 @@ public class CookieJarManager {
    *
    * @return
    */
-  public static String getUserAgent() {
+  public String getUserAgent() {
     try {
       return "Mozilla/5.0(Linux; U; Android " + Build.VERSION.RELEASE + "; "
         + Locale.getDefault().getLanguage() + "; deviceId:"
@@ -101,7 +95,7 @@ public class CookieJarManager {
         + ") AppleWebKit/533.0 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1"
         + "; version:" + AppUtil.getAppVersionName()
         + "; AppClient:" + getSource()
-        + "; StoreCode:" + mStoreCode;
+        + ";";
     } catch (Exception e) {
       Log.w("Sonar Catch Exception", e);
       e.printStackTrace();
@@ -118,11 +112,26 @@ public class CookieJarManager {
     }
   }
 
-  public static void setToken(String token) {
-    CookieJarManager.sToken = token;
+  public void setToken(String token) {
+    sToken = token;
   }
 
-  public static String getToken( ) {
-    return CookieJarManager.sToken ;
+  public void setTokenGenerate(TokenGenerate tokenGenerate){
+    this.tokenGenerate = tokenGenerate;
+  }
+
+  public String getToken() {
+    if (tokenGenerate != null) {
+      setToken(tokenGenerate.generate());
+    }
+    return sToken ;
+  }
+
+  public interface  TokenGenerate {
+    /**
+     * 生成token
+     * @return
+     */
+    String generate();
   }
 }

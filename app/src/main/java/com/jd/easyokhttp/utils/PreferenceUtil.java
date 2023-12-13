@@ -14,7 +14,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * @author jd
+ */
 public final class PreferenceUtil {
     public static final String FILE_NAME = "leo_pro";
 

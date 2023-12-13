@@ -17,6 +17,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
+/**
+ * @author jd
+ */
 public class UploadBuilder extends  HttpBuilder {
     private Pair<String, File>[] files;
 
@@ -38,17 +41,7 @@ public class UploadBuilder extends  HttpBuilder {
         Request.Builder mBuilder = new Request.Builder();
         mBuilder.url(url);
         //进项这部操作才能监听进度，来自鸿洋okHttpUtils
-        RequestBody requestBodyProgress = new CountingRequestBody(requestBody, new CountingRequestBody.Listener() {
-            @Override
-            public void onRequestProgress(final long bytesWritten, final long contentLength) {
-                mDelivery.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.inProgress(contentLength,bytesWritten * 1.0f / contentLength);
-                    }
-                });
-            }
-        });
+        RequestBody requestBodyProgress = new CountingRequestBody(requestBody, (bytesWritten, contentLength) -> mDelivery.post(() -> callback.inProgress(contentLength,bytesWritten * 1.0f / contentLength)));
         mBuilder.post(requestBodyProgress);
         return mBuilder;
     }

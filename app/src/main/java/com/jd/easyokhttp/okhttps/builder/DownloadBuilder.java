@@ -24,16 +24,27 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-//这里应该先生成临时文件
+/**
+ * @author jd
+ * 这里应该先生成临时文件
+ */
 public class DownloadBuilder extends HttpBuilder {
-    //断点续传的长度
+    /**
+     * 断点续传的长度
+     */
     private long currentLength;
-    //文件路径(不包括文件名)
+    /**
+     * 文件路径(不包括文件名)
+     */
     private String path;
-    //文件名
+    /**
+     * 文件名
+     */
     private String fileName;
     private String fileNameTemp;
-    //是否开启断点续传
+    /**
+     * 是否开启断点续传
+     */
     private boolean resume;
 
     public DownloadBuilder(OkHttpClient okHttpClient, Handler delivery) {

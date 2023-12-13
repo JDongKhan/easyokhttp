@@ -2,8 +2,7 @@ package com.jd.easyokhttp.utils;
 import java.io.File;
 
 /**
- * Created by leo
- * on 2019/8/2.
+ * @author jd
  */
 public class OpenFileUtils {
     private static final String[][] MIME_MapTable={

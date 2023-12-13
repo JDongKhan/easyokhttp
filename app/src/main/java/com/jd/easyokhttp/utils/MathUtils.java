@@ -3,8 +3,7 @@ package com.jd.easyokhttp.utils;
 import java.math.BigDecimal;
 
 /**
- * Created by leo
- * on 2019/8/2.
+ * @author jd
  */
 public class MathUtils {
     //保留几位小数

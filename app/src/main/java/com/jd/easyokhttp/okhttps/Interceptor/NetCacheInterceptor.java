@@ -11,8 +11,13 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ * @author jd
+ */
 public class NetCacheInterceptor implements Interceptor {
-    //30在线的时候的缓存过期时间，如果想要不缓存，直接时间设置为0
+    /**
+     * 30在线的时候的缓存过期时间，如果想要不缓存，直接时间设置为0
+     */
     private int onlineCacheTime;
     public void setOnlineTime(int time) {
         this.onlineCacheTime = time;
